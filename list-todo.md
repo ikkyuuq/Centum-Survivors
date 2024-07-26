@@ -2,7 +2,7 @@
 
 1. Player movement **-> feature/playermovement(ikkyuuq)**
 2. Simple enemies that spawn and move into the player **-> feature/enemyspawn(ikkyuuq)**
-3. Automatic attack **-> feature/autoattack(ikkyuuq)**
+3. Automatic attack
 4. Collision detection (enemies attack, player attack)
 5. Progression (enemies get faster, amount over time)
 
