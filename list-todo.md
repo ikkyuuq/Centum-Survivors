@@ -1,14 +1,14 @@
 ### CORE
 
-1. Player movement
-2. Simple enemies that spawn and move into the player
-3. Automatic attack
+1. Player movement **-> feature/playermovement(ikkyuuq)**
+2. Simple enemies that spawn and move into the player **-> feature/enemyspawn(ikkyuuq)**
+3. Automatic attack **-> feature/autoattack(ikkyuuq)**
 4. Collision detection (enemies attack, player attack)
 5. Progression (enemies get faster, amount over time)
 
 ### CORE little
 
-6. Multiple weapons and upgrades
+6. Multiple charactor(weapon, attack effect) and upgrades
 7. Experience and leveling system
 
 ### Optional
