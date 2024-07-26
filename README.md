@@ -28,14 +28,14 @@
 
 1. Git Workflow:
    - **Pull** the latest changes from the remote repository **before starting any new work**:<br/>
-     `git pull origin main`\n
-   - Create a **new branch** for each feature or fix:\n
-     `git checkout -b feature/your-feature-name`\n
-   - Add and **commit** changes **in your branch**:\n
-     `git add .`\n
-     `git commit -m "Description of your changes"`\n
-   - Push your branch to the remote repository:\n
-     `git push origin feature/your-feature-name`\n
+     `git pull origin main`<br/>
+   - Create a **new branch** for each feature or fix:<br/>
+     `git checkout -b feature/your-feature-name`<br/>
+   - Add and **commit** changes **in your branch**:<br/>
+     `git add .`<br/>
+     `git commit -m "Description of your changes"`<br/>
+   - Push your branch to the remote repository:<br/>
+     `git push origin feature/your-feature-name`<br/>
    - Create a **pull request from your branch to the main branch** on your Git
      
 2. Merging Changes:
