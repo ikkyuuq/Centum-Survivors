@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameManager : MonoBehaviour{
     public GameObject playerPrefab, enemyPrefab;
-    private List<GameObject> players, enemies, projectiles = new List<GameObject>();
+    private GameObject player;
+    private List<GameObject> enemies, projectiles = new List<GameObject>();
     void Start(){
-        players = Instantiate(playerPrefab, Vector3.zero)
+        player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
     }
     void Update(){
 
