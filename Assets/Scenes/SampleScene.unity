@@ -243,6 +243,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41dd0dd758cf2adb0aa2d60144036e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 2057168259079814146, guid: ce4401247b27785679609433434f9353, type: 3}
+  enemyPrefab: {fileID: 4631061011115271958, guid: d1e8c89c8d3973ac4aaf952e1ea77602, type: 3}
+  playerMoveSpeed: 5
+  enemySpawnTime: 0
 --- !u!4 &1659549381
 Transform:
   m_ObjectHideFlags: 0
