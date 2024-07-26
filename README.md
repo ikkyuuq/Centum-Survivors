@@ -27,7 +27,7 @@
 ### Git
 
 1. Git Workflow:
-   - **Pull** the latest changes from the remote repository **before starting any new work**:\n
+   - **Pull** the latest changes from the remote repository **before starting any new work**:<br/>
      `git pull origin main`\n
    - Create a **new branch** for each feature or fix:\n
      `git checkout -b feature/your-feature-name`\n
