@@ -3,8 +3,8 @@
 1. Player movement **-> feature/playermovement(ikkyuuq) DONE**
 2. Simple enemies that spawn and move into the player **-> feature/enemyspawn(ikkyuuq) DONE**
 3. Automatic attack
-4. Collision detection (enemies attack, player attack)
-5. Progression (enemies get faster, amount over time)
+4. Collision detection (enemies attack, player attack) feature/CollisionDetection(Ryu) DONE**
+5. Progression (enemies get faster, amount over time) feature/Progression(Ryu) DONE**
 
 ### CORE little
 
