@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameManager : MonoBehaviour {
     public GameObject playerPrefab, enemyPrefab, projectilePrefab;
-    public float enemyAttackDamage = 10f, projectileDamage = 20f, playerHealth = 100f, enemyHealth = 50f, playerMoveSpeed = 5, playerMainClassLevel = 1.0f, projectileSpawnTime = 1f, enemySpawnTime = 0f, enemySpawnInterval = 1f, enemyMoveSpeed = 3f, progressionInterval = 5f, spawnRateIncrease = 0.1f, speedIncrease = 0.5f, progressionTimer = 0f, spiralSpeed = 1.0f, fadeDuration = 2.0f;
+    public float enemyAttackDamage = 10f, projectileDamage = 20f, playerHealth = 100f, playerMoveSpeed = 5, playerMainClassLevel = 1.0f, projectileSpawnTime = 1f, enemySpawnTime = 0f, enemySpawnInterval = 1f, enemyMoveSpeed = 3f, progressionInterval = 5f, spawnRateIncrease = 0.1f, speedIncrease = 0.5f, progressionTimer = 0f, spiralSpeed = 1.0f, fadeDuration = 4.5f;
     private GameObject player;
     private List<GameObject> enemies = new List<GameObject>(), projectiles = new List<GameObject>();
+    private Dictionary<GameObject, float> enemyHealthDict = new Dictionary<GameObject, float>();
+    private Dictionary<GameObject, HashSet<GameObject>> projectileHitEnemies = new Dictionary<GameObject, HashSet<GameObject>>();
     void Start() {
         player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
     }
     void Update() {
-        PlayerManager(); EnemyManager(); HandleProgression();
+        PlayerManager(), EnemyManager(), HandleProgression();
     }
     void PlayerManager() {
         player.transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * playerMoveSpeed);
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour {
         if (projectileSpawnTime >= 1f / playerMainClassLevel) {
             GameObject projectile = Instantiate(projectilePrefab, player.transform.position + new Vector3(1, 0, 0), Quaternion.identity);
             projectiles.Add(projectile);
+            projectileHitEnemies[projectile] = new HashSet<GameObject>();
             StartCoroutine(SpiralAndFade(projectile));
             projectileSpawnTime = 0;
         }
@@ -37,30 +40,38 @@ public class GameManager : MonoBehaviour {
         }
         if (obj != null) {
             Destroy(obj);
+            projectileHitEnemies.Remove(obj); // Cleanup hit tracking
         }
     }
     void EnemyManager() {
         enemySpawnTime += Time.deltaTime;
         if (enemySpawnTime >= enemySpawnInterval) {
-            enemies.Add(Instantiate(enemyPrefab, player.transform.position + (Vector3)Random.insideUnitCircle.normalized * 10f, Quaternion.identity));
+            GameObject enemy = Instantiate(enemyPrefab, player.transform.position + (Vector3)Random.insideUnitCircle.normalized * 10f, Quaternion.identity);
+            enemies.Add(enemy);
+            enemyHealthDict[enemy] = 50f; // individual enemy health
             enemySpawnTime = 0;
         }
-        List<GameObject> enemiesCopy = new List<GameObject>(enemies);
-        foreach (var enemy in enemiesCopy) {
-            if (enemy != null){
+        List<GameObject> enemiesToRemove = new List<GameObject>();
+        foreach (var enemy in enemies) {
+            if (enemy != null) {
                 enemy.GetComponent<Rigidbody2D>().MovePosition(enemy.GetComponent<Rigidbody2D>().position + (Vector2)(player.transform.position - enemy.transform.position).normalized * Time.deltaTime * enemyMoveSpeed);
                 foreach (var projectile in projectiles) {
                     if (projectile != null && projectile.GetComponent<Collider2D>().IsTouching(enemy.GetComponent<Collider2D>())) {
-                        enemyHealth -= projectileDamage;
-                        Destroy(projectile);
-                        if (enemyHealth <= 0) {
-                            Destroy(enemy);
-                            enemies.Remove(enemy); // Remove from original list after destroying the object
+                        if (!projectileHitEnemies[projectile].Contains(enemy)) {
+                            enemyHealthDict[enemy] -= projectileDamage; // Reduce individual enemy health
+                            projectileHitEnemies[projectile].Add(enemy); // Mark this enemy as hit by this projectile
+                            if (enemyHealthDict[enemy] <= 0) {
+                                Destroy(enemy);
+                                enemiesToRemove.Add(enemy);
+                            }
                         }
-                        break;
                     }
                 }
             }
+        }
+        foreach (var enemy in enemiesToRemove) {
+            enemies.Remove(enemy);
+            enemyHealthDict.Remove(enemy); 
         }
     }
     void HandleProgression() {
