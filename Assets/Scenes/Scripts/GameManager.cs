@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GameManager : MonoBehaviour {
     public GameObject playerPrefab, enemyPrefab, projectilePrefab;
-    public float enemyAttackDamage = 10f, projectileDamage = 20f, playerHealth = 100f, playerMoveSpeed = 5, playerMainClassLevel = 1.0f, projectileSpawnTime = 1f, enemySpawnTime = 0f, enemySpawnInterval = 1f, enemyMoveSpeed = 3f, progressionInterval = 5f, spawnRateIncrease = 0.1f, speedIncrease = 0.5f, progressionTimer = 0f, spiralSpeed = 1.0f, fadeDuration = 4.5f;
+    public float enemyAttackDamage = 10f, projectileDamage = 20f, playerHealth = 100f, playerMoveSpeed = 5f, playerMainClassLevel = 1.0f, projectileSpawnTime = 1f, enemySpawnTime = 0f, enemySpawnInterval = 1f, enemyMoveSpeed = 3f, progressionInterval = 5f, spawnRateIncrease = 0.1f, speedIncrease = 0.5f, progressionTimer = 0f, spiralSpeed = 1.0f, fadeDuration = 4.5f;
     private GameObject player;
     private List<GameObject> enemies = new List<GameObject>(), projectiles = new List<GameObject>();
     private Dictionary<GameObject, float> enemyHealthDict = new Dictionary<GameObject, float>();
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
         player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
     }
     void Update() {
-        PlayerManager(), EnemyManager(), HandleProgression();
+        PlayerManager(); EnemyManager(); HandleProgression();
     }
     void PlayerManager() {
         player.transform.Translate(new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0) * Time.deltaTime * playerMoveSpeed);
